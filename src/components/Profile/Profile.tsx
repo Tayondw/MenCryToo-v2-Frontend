@@ -333,7 +333,7 @@ const Profile: React.FC = () => {
 
 	const handleSendMessage = () => {
 		if (messageInput.trim()) {
-			// Here you would typically add the message to the messages array
+			// Add the message to the messages array here
 			console.log("Sending message:", messageInput);
 			setMessageInput("");
 		}
@@ -342,8 +342,8 @@ const Profile: React.FC = () => {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-white">
 			<div className="flex min-h-screen">
-				{/* Far Left Navigation Bar */}
-				<div className="w-20 bg-slate-900/80 backdrop-blur-sm border-r border-slate-700/50 flex-shrink-0">
+				{/* Far Left Navigation Bar - Fixed Position */}
+				<div className="w-20 bg-slate-900/80 backdrop-blur-sm border-r border-slate-700/50 flex-shrink-0 fixed left-0 top-0 h-full z-10">
 					<div className="p-4 h-full flex flex-col">
 						{/* Logo */}
 						<div className="flex justify-center mb-8">
@@ -393,567 +393,582 @@ const Profile: React.FC = () => {
 					</div>
 				</div>
 
-				{/* User Information Sidebar */}
-				<div className="w-80 bg-slate-800/50 backdrop-blur-sm border-r border-slate-700/50 flex-shrink-0">
-					<div className="p-6">
-						{/* Search Bar */}
-						<div className="mb-6">
-							<div className="relative">
-								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-								<input
-									type="text"
-									placeholder="Search..."
-									className="w-full bg-slate-700/50 border border-slate-600 rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-blue-500 transition-colors"
-								/>
-							</div>
-						</div>
-
-						{/* Profile Section */}
-						<div className="text-center mb-8">
-							<div className="relative inline-block">
-								<img
-									src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150"
-									alt="John Wick"
-									className="w-20 h-20 rounded-full border-4 border-blue-500 mx-auto"
-								/>
-								<div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-800"></div>
-							</div>
-							<h2 className="text-xl font-bold mt-3">John Wick</h2>
-							<p className="text-slate-400 text-sm">NYC Photographer</p>
-							<p className="text-green-400 text-sm font-medium">Online</p>
-
-							<div className="flex justify-center space-x-8 mt-4">
-								<div className="text-center">
-									<p className="text-2xl font-bold">2802</p>
-									<p className="text-slate-400 text-sm">Followers</p>
-								</div>
-								<div className="text-center">
-									<p className="text-2xl font-bold">980</p>
-									<p className="text-slate-400 text-sm">Following</p>
-								</div>
-							</div>
-						</div>
-
-						{/* Horizontal Profile Navigation */}
-						<div className="mb-6">
-							<div className="flex space-x-1 bg-slate-700/30 rounded-xl p-1">
-								{[
-									{ icon: Newspaper, label: "News" },
-									{ icon: Info, label: "About" },
-									{ icon: Users, label: "People" },
-									{ icon: FileText, label: "Posts", active: true },
-									{ icon: Activity, label: "Activity" },
-								].map((item, index) => (
-									<button
-										key={index}
-										className={`flex-1 flex flex-col items-center space-y-1 p-2 rounded-lg transition-all duration-200 ${
-											item.active
-												? "bg-blue-600 text-white"
-												: "hover:bg-slate-600/50 text-slate-300 hover:text-white"
-										}`}
-									>
-										<item.icon className="w-4 h-4" />
-										<span className="text-xs">{item.label}</span>
-									</button>
-								))}
-							</div>
-						</div>
-
-						{/* User Stats */}
-						<div className="bg-slate-700/30 rounded-xl p-4 mb-6">
-							<h3 className="font-semibold mb-3 text-sm">Profile Stats</h3>
-							<div className="space-y-2 text-sm">
-								<div className="flex justify-between">
-									<span className="text-slate-400">Posts</span>
-									<span className="font-medium">127</span>
-								</div>
-								<div className="flex justify-between">
-									<span className="text-slate-400">Photos</span>
-									<span className="font-medium">1,284</span>
-								</div>
-								<div className="flex justify-between">
-									<span className="text-slate-400">Likes Received</span>
-									<span className="font-medium">15.2K</span>
-								</div>
-							</div>
-						</div>
-
-						{/* User Posts in Sidebar */}
-						<div>
-							<h3 className="font-semibold mb-3 text-sm">Recent Posts</h3>
-							<div className="space-y-3">
-								{userPosts.slice(0, 2).map((post) => (
-									<div key={post.id} className="bg-slate-700/30 rounded-xl p-3">
-										<div className="flex items-center space-x-2 mb-2">
-											<img
-												src={post.authorImage}
-												alt={post.author}
-												className="w-6 h-6 rounded-full"
-											/>
-											<div>
-												<p className="text-xs font-medium">{post.author}</p>
-												<p className="text-xs text-slate-400">{post.time}</p>
-											</div>
-										</div>
-										<p className="text-xs text-slate-300 mb-2 line-clamp-2">
-											{post.content}
-										</p>
-										<img
-											src={post.image}
-											alt="Post content"
-											className="w-full h-20 object-cover rounded-lg"
-										/>
-										<div className="flex items-center justify-between mt-2 text-xs text-slate-400">
-											<span>{post.likes} likes</span>
-											<span>{post.comments} comments</span>
-										</div>
-									</div>
-								))}
-							</div>
-						</div>
-					</div>
-				</div>
-
-				{/* Main Content - Feed Posts */}
-				<div className="flex-1 flex justify-center">
-					<div className="w-full max-w-4xl">
+				{/* Content Container - Offset by navbar width */}
+				<div className="flex flex-1 ml-20">
+					{/* User Information Sidebar */}
+					<div className="w-80 bg-slate-800/50 backdrop-blur-sm border-r border-slate-700/50 flex-shrink-0 overflow-y-auto">
 						<div className="p-6">
-							{/* Story Header */}
-							<div className="mb-4">
-								<h3 className="text-lg font-semibold">Story</h3>
+							{/* Search Bar */}
+							<div className="mb-6">
+								<div className="relative">
+									<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+									<input
+										type="text"
+										placeholder="Search..."
+										className="w-full bg-slate-700/50 border border-slate-600 rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+									/>
+								</div>
 							</div>
 
-							{/* Story Navigation and Stories */}
-							<div className="mb-6">
-								<div className="flex items-center justify-between mb-4">
-									<div className="flex space-x-2 text-sm text-slate-400">
-										<span className="px-3 py-1 bg-blue-600 text-white rounded-full">
-											All
-										</span>
-										<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
-											Facebook
-										</span>
-										<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
-											Instagram
-										</span>
-										<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
-											Twitter
-										</span>
-										<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
-											LinkedIn
-										</span>
-										<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
-											Rayze
-										</span>
-										<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
-											Snapchat
-										</span>
+							{/* Profile Section */}
+							<div className="text-center mb-8">
+								<div className="relative inline-block">
+									<img
+										src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150"
+										alt="John Wick"
+										className="w-20 h-20 rounded-full border-4 border-blue-500 mx-auto"
+									/>
+									<div className="absolute bottom-1 right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-800"></div>
+								</div>
+								<h2 className="text-xl font-bold mt-3">John Wick</h2>
+								<p className="text-slate-400 text-sm">NYC Photographer</p>
+								<p className="text-green-400 text-sm font-medium">Online</p>
+
+								<div className="flex justify-center space-x-8 mt-4">
+									<div className="text-center">
+										<p className="text-2xl font-bold">2802</p>
+										<p className="text-slate-400 text-sm">Followers</p>
+									</div>
+									<div className="text-center">
+										<p className="text-2xl font-bold">980</p>
+										<p className="text-slate-400 text-sm">Following</p>
 									</div>
 								</div>
+							</div>
 
-								<div className="flex space-x-3 overflow-x-auto pb-2">
-									{stories.map((story) => (
-										<div key={story.id} className="flex-shrink-0 text-center">
-											<div className="relative">
-												<img
-													src={story.image}
-													alt={story.name}
-													className="w-16 h-16 rounded-xl object-cover border-2 border-blue-500"
-												/>
-												{story.isOwn && (
-													<div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-														<Plus className="w-3 h-3 text-white" />
-													</div>
-												)}
-											</div>
-											<p className="text-xs mt-1 text-slate-300 truncate w-16">
-												{story.name}
-											</p>
-										</div>
+							{/* Horizontal Profile Navigation */}
+							<div className="mb-6">
+								<div className="flex space-x-1 bg-slate-700/30 rounded-xl p-1">
+									{[
+										{ icon: Newspaper, label: "News" },
+										{ icon: Info, label: "About" },
+										{ icon: Users, label: "People" },
+										{ icon: FileText, label: "Posts", active: true },
+										{ icon: Activity, label: "Activity" },
+									].map((item, index) => (
+										<button
+											key={index}
+											className={`flex-1 flex flex-col items-center space-y-1 p-2 rounded-lg transition-all duration-200 ${
+												item.active
+													? "bg-blue-600 text-white"
+													: "hover:bg-slate-600/50 text-slate-300 hover:text-white"
+											}`}
+										>
+											<item.icon className="w-4 h-4" />
+											<span className="text-xs">{item.label}</span>
+										</button>
 									))}
 								</div>
 							</div>
 
-							{/* Feed Posts */}
-							<div className="space-y-6">
-								{feedPosts.map((post) => (
-									<div
-										key={post.id}
-										className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden"
-									>
-										{/* Post Header */}
-										<div className="p-4 flex items-center justify-between">
-											<div className="flex items-center space-x-3">
+							{/* User Stats */}
+							<div className="bg-slate-700/30 rounded-xl p-4 mb-6">
+								<h3 className="font-semibold mb-3 text-sm">Profile Stats</h3>
+								<div className="space-y-2 text-sm">
+									<div className="flex justify-between">
+										<span className="text-slate-400">Posts</span>
+										<span className="font-medium">127</span>
+									</div>
+									<div className="flex justify-between">
+										<span className="text-slate-400">Photos</span>
+										<span className="font-medium">1,284</span>
+									</div>
+									<div className="flex justify-between">
+										<span className="text-slate-400">Likes Received</span>
+										<span className="font-medium">15.2K</span>
+									</div>
+								</div>
+							</div>
+
+							{/* User Posts in Sidebar */}
+							<div>
+								<h3 className="font-semibold mb-3 text-sm">Recent Posts</h3>
+								<div className="space-y-3">
+									{userPosts.slice(0, 2).map((post) => (
+										<div
+											key={post.id}
+											className="bg-slate-700/30 rounded-xl p-3"
+										>
+											<div className="flex items-center space-x-2 mb-2">
 												<img
 													src={post.authorImage}
 													alt={post.author}
-													className="w-10 h-10 rounded-full"
+													className="w-6 h-6 rounded-full"
 												/>
 												<div>
-													<h4 className="font-semibold">{post.author}</h4>
-													<p className="text-sm text-slate-400">
-														{post.time} • Public
-													</p>
+													<p className="text-xs font-medium">{post.author}</p>
+													<p className="text-xs text-slate-400">{post.time}</p>
 												</div>
 											</div>
-											<MoreHorizontal className="w-5 h-5 text-slate-400 cursor-pointer hover:text-white" />
-										</div>
-
-										{/* Post Content */}
-										<div className="px-4 pb-4">
-											<p className="text-slate-200 mb-3">{post.content}</p>
-										</div>
-
-										{/* Post Image */}
-										<div className="px-4 pb-4">
+											<p className="text-xs text-slate-300 mb-2 line-clamp-2">
+												{post.content}
+											</p>
 											<img
 												src={post.image}
 												alt="Post content"
-												className="w-full h-64 object-cover rounded-xl"
+												className="w-full h-20 object-cover rounded-lg"
 											/>
-										</div>
-
-										{/* Post Actions */}
-										<div className="px-4 pb-4 border-t border-slate-700/50 pt-4">
-											<div className="flex items-center justify-between text-sm text-slate-400 mb-3">
-												<span>{post.likes.toLocaleString()} likes</span>
+											<div className="flex items-center justify-between mt-2 text-xs text-slate-400">
+												<span>{post.likes} likes</span>
 												<span>{post.comments} comments</span>
 											</div>
-											<div className="flex items-center justify-between">
-												<button className="flex items-center space-x-2 text-slate-400 hover:text-red-400 transition-colors">
-													<Heart className="w-5 h-5" />
-													<span>Like</span>
-												</button>
-												<button className="flex items-center space-x-2 text-slate-400 hover:text-blue-400 transition-colors">
-													<MessageCircle className="w-5 h-5" />
-													<span>Comment</span>
-												</button>
-												<button className="flex items-center space-x-2 text-slate-400 hover:text-green-400 transition-colors">
-													<Share className="w-5 h-5" />
-													<span>Share</span>
-												</button>
-											</div>
 										</div>
-									</div>
-								))}
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
-				{/* Right Sidebar - Fixed width and positioned to the right */}
-				<div className="w-80 bg-slate-800/50 backdrop-blur-sm border-l border-slate-700/50 flex-shrink-0">
-					<div className="p-6">
-						{/* Active Call */}
-						<div className="mb-6">
-							<div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-4 text-center">
-								<img
-									src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100"
-									alt="Juliet Lopez"
-									className="w-16 h-16 rounded-full mx-auto mb-3 border-3 border-white"
-								/>
-								<h3 className="font-semibold text-lg">Juliet Lopez</h3>
-								<p className="text-blue-100 text-sm mb-3">
-									Designer on Calling...
-								</p>
-
-								<div className="flex justify-center space-x-4 mb-4">
-									<button className="p-3 bg-green-500 rounded-full hover:bg-green-600 transition-colors">
-										<Phone className="w-5 h-5" />
-									</button>
-									<button className="p-3 bg-red-500 rounded-full hover:bg-red-600 transition-colors">
-										<Phone className="w-5 h-5" />
-									</button>
+					{/* Main Content - Feed Posts */}
+					<div className="flex-1 flex justify-center overflow-y-auto">
+						<div className="w-full max-w-4xl">
+							<div className="p-6">
+								{/* Story Header */}
+								<div className="mb-4">
+									<h3 className="text-lg font-semibold">Story</h3>
 								</div>
 
-								<div className="grid grid-cols-4 gap-2 text-xs">
-									<div className="bg-white/20 rounded-lg p-2">
-										<Phone className="w-4 h-4 mx-auto mb-1" />
-										<span>Mute</span>
+								{/* Story Navigation and Stories */}
+								<div className="mb-6">
+									<div className="flex items-center justify-between mb-4">
+										<div className="flex space-x-2 text-sm text-slate-400">
+											<span className="px-3 py-1 bg-blue-600 text-white rounded-full">
+												All
+											</span>
+											<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
+												Facebook
+											</span>
+											<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
+												Instagram
+											</span>
+											<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
+												Twitter
+											</span>
+											<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
+												LinkedIn
+											</span>
+											<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
+												Rayze
+											</span>
+											<span className="px-3 py-1 hover:bg-slate-700 rounded-full cursor-pointer">
+												Snapchat
+											</span>
+										</div>
 									</div>
-									<div className="bg-white/20 rounded-lg p-2">
-										<MessageCircle className="w-4 h-4 mx-auto mb-1" />
-										<span>Message</span>
+
+									<div className="flex space-x-3 overflow-x-auto pb-2">
+										{stories.map((story) => (
+											<div key={story.id} className="flex-shrink-0 text-center">
+												<div className="relative">
+													<img
+														src={story.image}
+														alt={story.name}
+														className="w-16 h-16 rounded-xl object-cover border-2 border-blue-500"
+													/>
+													{story.isOwn && (
+														<div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+															<Plus className="w-3 h-3 text-white" />
+														</div>
+													)}
+												</div>
+												<p className="text-xs mt-1 text-slate-300 truncate w-16">
+													{story.name}
+												</p>
+											</div>
+										))}
 									</div>
-									<div className="bg-white/20 rounded-lg p-2">
-										<Users className="w-4 h-4 mx-auto mb-1" />
-										<span>Social</span>
+								</div>
+
+								{/* Feed Posts */}
+								<div className="space-y-6">
+									{feedPosts.map((post) => (
+										<div
+											key={post.id}
+											className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 overflow-hidden"
+										>
+											{/* Post Header */}
+											<div className="p-4 flex items-center justify-between">
+												<div className="flex items-center space-x-3">
+													<img
+														src={post.authorImage}
+														alt={post.author}
+														className="w-10 h-10 rounded-full"
+													/>
+													<div>
+														<h4 className="font-semibold">{post.author}</h4>
+														<p className="text-sm text-slate-400">
+															{post.time} • Public
+														</p>
+													</div>
+												</div>
+												<MoreHorizontal className="w-5 h-5 text-slate-400 cursor-pointer hover:text-white" />
+											</div>
+
+											{/* Post Content */}
+											<div className="px-4 pb-4">
+												<p className="text-slate-200 mb-3">{post.content}</p>
+											</div>
+
+											{/* Post Image */}
+											<div className="px-4 pb-4">
+												<img
+													src={post.image}
+													alt="Post content"
+													className="w-full h-64 object-cover rounded-xl"
+												/>
+											</div>
+
+											{/* Post Actions */}
+											<div className="px-4 pb-4 border-t border-slate-700/50 pt-4">
+												<div className="flex items-center justify-between text-sm text-slate-400 mb-3">
+													<span>{post.likes.toLocaleString()} likes</span>
+													<span>{post.comments} comments</span>
+												</div>
+												<div className="flex items-center justify-between">
+													<button className="flex items-center space-x-2 text-slate-400 hover:text-red-400 transition-colors">
+														<Heart className="w-5 h-5" />
+														<span>Like</span>
+													</button>
+													<button className="flex items-center space-x-2 text-slate-400 hover:text-blue-400 transition-colors">
+														<MessageCircle className="w-5 h-5" />
+														<span>Comment</span>
+													</button>
+													<button className="flex items-center space-x-2 text-slate-400 hover:text-green-400 transition-colors">
+														<Share className="w-5 h-5" />
+														<span>Share</span>
+													</button>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Right Sidebar - Fixed width and positioned to the right */}
+					<div className="w-80 bg-slate-800/50 backdrop-blur-sm border-l border-slate-700/50 flex-shrink-0 overflow-y-auto">
+						<div className="p-6">
+							{/* Active Call */}
+							<div className="mb-6">
+								<div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-4 text-center">
+									<img
+										src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100"
+										alt="Juliet Lopez"
+										className="w-16 h-16 rounded-full mx-auto mb-3 border-3 border-white"
+									/>
+									<h3 className="font-semibold text-lg">Juliet Lopez</h3>
+									<p className="text-blue-100 text-sm mb-3">
+										Designer on Calling...
+									</p>
+
+									<div className="flex justify-center space-x-4 mb-4">
+										<button className="p-3 bg-green-500 rounded-full hover:bg-green-600 transition-colors">
+											<Phone className="w-5 h-5" />
+										</button>
+										<button className="p-3 bg-red-500 rounded-full hover:bg-red-600 transition-colors">
+											<Phone className="w-5 h-5" />
+										</button>
 									</div>
-									<div className="bg-white/20 rounded-lg p-2">
-										<MoreHorizontal className="w-4 h-4 mx-auto mb-1" />
+
+									<div className="grid grid-cols-4 gap-2 text-xs">
+										<div className="bg-white/20 rounded-lg p-2">
+											<Phone className="w-4 h-4 mx-auto mb-1" />
+											<span>Mute</span>
+										</div>
+										<div className="bg-white/20 rounded-lg p-2">
+											<MessageCircle className="w-4 h-4 mx-auto mb-1" />
+											<span>Message</span>
+										</div>
+										<div className="bg-white/20 rounded-lg p-2">
+											<Users className="w-4 h-4 mx-auto mb-1" />
+											<span>Social</span>
+										</div>
+										<div className="bg-white/20 rounded-lg p-2">
+											<MoreHorizontal className="w-4 h-4 mx-auto mb-1" />
+											<span>History</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							{/* Contact Info */}
+							<div className="mb-6">
+								<h3 className="font-semibold mb-3">Contact Information</h3>
+								<div className="space-y-3 text-sm">
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">Phone Number</span>
+										<span>+1 765 555 3055</span>
+									</div>
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">E-mail</span>
+										<span>julietlopez@example.com</span>
+									</div>
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">Work at</span>
+										<span>Design Studio</span>
+									</div>
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">Location</span>
+										<span>New York, NY</span>
+									</div>
+								</div>
+							</div>
+
+							{/* Social Contact */}
+							<div className="mb-6">
+								<h3 className="font-semibold mb-3">Social Contact</h3>
+								<div className="space-y-2 text-sm">
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">Facebook</span>
+										<a href="#" className="text-blue-400 hover:text-blue-300">
+											facebook.com/julietlopez
+										</a>
+									</div>
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">Instagram</span>
+										<a href="#" className="text-pink-400 hover:text-pink-300">
+											@julietlopez
+										</a>
+									</div>
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">Twitter</span>
+										<a href="#" className="text-blue-400 hover:text-blue-300">
+											@julietlopez
+										</a>
+									</div>
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">LinkedIn</span>
+										<a href="#" className="text-blue-400 hover:text-blue-300">
+											linkedin.com/in/julietlopez
+										</a>
+									</div>
+									<div className="flex items-center justify-between">
+										<span className="text-slate-400">Dribbble</span>
+										<a href="#" className="text-pink-400 hover:text-pink-300">
+											dribbble.com/julietlopez
+										</a>
+									</div>
+								</div>
+							</div>
+
+							{/* Activity Status Header */}
+							<div className="mb-3">
+								<h3 className="font-semibold">Activity Status</h3>
+							</div>
+
+							{/* Message/History Navigation */}
+							<div className="mb-4">
+								<div className="flex space-x-1 bg-slate-700/30 rounded-lg p-1">
+									<button
+										onClick={() => setActiveTab("messages")}
+										className={`flex items-center space-x-1 px-3 py-2 rounded flex-1 justify-center text-sm transition-all duration-200 ${
+											activeTab === "messages"
+												? "bg-blue-600 text-white"
+												: "text-slate-400 hover:text-white"
+										}`}
+									>
+										<Send className="w-4 h-4" />
+										<span>Messages</span>
+									</button>
+									<button
+										onClick={() => setActiveTab("history")}
+										className={`flex items-center space-x-1 px-3 py-2 rounded flex-1 justify-center text-sm transition-all duration-200 ${
+											activeTab === "history"
+												? "bg-blue-600 text-white"
+												: "text-slate-400 hover:text-white"
+										}`}
+									>
+										<History className="w-4 h-4" />
 										<span>History</span>
-									</div>
+									</button>
 								</div>
 							</div>
-						</div>
 
-						{/* Contact Info */}
-						<div className="mb-6">
-							<h3 className="font-semibold mb-3">Contact Information</h3>
-							<div className="space-y-3 text-sm">
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">Phone Number</span>
-									<span>+1 765 555 3055</span>
-								</div>
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">E-mail</span>
-									<span>julietlopez@example.com</span>
-								</div>
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">Work at</span>
-									<span>Design Studio</span>
-								</div>
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">Location</span>
-									<span>New York, NY</span>
-								</div>
-							</div>
-						</div>
-
-						{/* Social Contact */}
-						<div className="mb-6">
-							<h3 className="font-semibold mb-3">Social Contact</h3>
-							<div className="space-y-2 text-sm">
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">Facebook</span>
-									<a href="#" className="text-blue-400 hover:text-blue-300">
-										facebook.com/julietlopez
-									</a>
-								</div>
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">Instagram</span>
-									<a href="#" className="text-pink-400 hover:text-pink-300">
-										@julietlopez
-									</a>
-								</div>
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">Twitter</span>
-									<a href="#" className="text-blue-400 hover:text-blue-300">
-										@julietlopez
-									</a>
-								</div>
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">LinkedIn</span>
-									<a href="#" className="text-blue-400 hover:text-blue-300">
-										linkedin.com/in/julietlopez
-									</a>
-								</div>
-								<div className="flex items-center justify-between">
-									<span className="text-slate-400">Dribbble</span>
-									<a href="#" className="text-pink-400 hover:text-pink-300">
-										dribbble.com/julietlopez
-									</a>
-								</div>
-							</div>
-						</div>
-
-						{/* Activity Status Header */}
-						<div className="mb-3">
-							<h3 className="font-semibold">Activity Status</h3>
-						</div>
-
-						{/* Message/History Navigation */}
-						<div className="mb-4">
-							<div className="flex space-x-1 bg-slate-700/30 rounded-lg p-1">
-								<button
-									onClick={() => setActiveTab("messages")}
-									className={`flex items-center space-x-1 px-3 py-2 rounded flex-1 justify-center text-sm transition-all duration-200 ${
-										activeTab === "messages"
-											? "bg-blue-600 text-white"
-											: "text-slate-400 hover:text-white"
-									}`}
-								>
-									<Send className="w-4 h-4" />
-									<span>Messages</span>
-								</button>
-								<button
-									onClick={() => setActiveTab("history")}
-									className={`flex items-center space-x-1 px-3 py-2 rounded flex-1 justify-center text-sm transition-all duration-200 ${
-										activeTab === "history"
-											? "bg-blue-600 text-white"
-											: "text-slate-400 hover:text-white"
-									}`}
-								>
-									<History className="w-4 h-4" />
-									<span>History</span>
-								</button>
-							</div>
-						</div>
-
-						{/* Activity Content */}
-						<div className="mb-6">
-							{activeTab === "messages" ? (
-								<div className="space-y-3">
-									{/* Messages Container with Modern Scrollbar */}
-									<div className="max-h-48 overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800 scrollbar-thumb-rounded-full">
-										{messages.map((message) => (
-											<div
-												key={message.id}
-												className={`flex ${
-													message.sent ? "justify-end" : "justify-start"
-												}`}
-											>
+							{/* Activity Content */}
+							<div className="mb-6">
+								{activeTab === "messages" ? (
+									<div className="space-y-3">
+										{/* Messages Container with Modern Scrollbar */}
+										<div className="max-h-48 overflow-y-auto space-y-3 pr-2 scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800 scrollbar-thumb-rounded-full">
+											{messages.map((message) => (
 												<div
-													className={`max-w-xs p-3 rounded-lg text-sm ${
-														message.sent
-															? "bg-blue-600 text-white rounded-br-sm"
-															: "bg-slate-700 text-slate-200 rounded-bl-sm"
+													key={message.id}
+													className={`flex ${
+														message.sent ? "justify-end" : "justify-start"
 													}`}
 												>
-													<p>{message.text}</p>
-													<p
-														className={`text-xs mt-1 ${
-															message.sent ? "text-blue-200" : "text-slate-400"
+													<div
+														className={`max-w-xs p-3 rounded-lg text-sm ${
+															message.sent
+																? "bg-blue-600 text-white rounded-br-sm"
+																: "bg-slate-700 text-slate-200 rounded-bl-sm"
 														}`}
 													>
-														{message.time}
-													</p>
+														<p>{message.text}</p>
+														<p
+															className={`text-xs mt-1 ${
+																message.sent
+																	? "text-blue-200"
+																	: "text-slate-400"
+															}`}
+														>
+															{message.time}
+														</p>
+													</div>
+												</div>
+											))}
+										</div>
+
+										{/* Message Input */}
+										<div className="flex items-center space-x-2 mt-4">
+											<input
+												type="text"
+												value={messageInput}
+												onChange={(e) => setMessageInput(e.target.value)}
+												placeholder="Type a message..."
+												className="flex-1 bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+												onKeyPress={(e) =>
+													e.key === "Enter" && handleSendMessage()
+												}
+											/>
+											<button
+												onClick={handleSendMessage}
+												className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+											>
+												<Send className="w-4 h-4" />
+											</button>
+										</div>
+									</div>
+								) : (
+									<div className="space-y-3 max-h-48 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800 scrollbar-thumb-rounded-full">
+										{historyItems.map((item) => (
+											<div
+												key={item.id}
+												className="flex items-center space-x-3"
+											>
+												<div
+													className={`p-2 rounded-full ${
+														item.type === "call"
+															? "bg-green-500/20 text-green-400"
+															: item.type === "message"
+															? "bg-blue-500/20 text-blue-400"
+															: item.type === "like"
+															? "bg-red-500/20 text-red-400"
+															: "bg-purple-500/20 text-purple-400"
+													}`}
+												>
+													{item.type === "call" && (
+														<Phone className="w-3 h-3" />
+													)}
+													{item.type === "message" && (
+														<MessageCircle className="w-3 h-3" />
+													)}
+													{item.type === "like" && (
+														<Heart className="w-3 h-3" />
+													)}
+													{item.type === "comment" && (
+														<MessageCircle className="w-3 h-3" />
+													)}
+												</div>
+												<div className="flex-1">
+													<p className="text-sm font-medium">{item.action}</p>
+													<div className="flex items-center space-x-2 text-xs text-slate-400">
+														<Clock className="w-3 h-3" />
+														<span>{item.time}</span>
+														{item.duration && <span>• {item.duration}</span>}
+													</div>
 												</div>
 											</div>
 										))}
 									</div>
+								)}
+							</div>
 
-									{/* Message Input */}
-									<div className="flex items-center space-x-2 mt-4">
-										<input
-											type="text"
-											value={messageInput}
-											onChange={(e) => setMessageInput(e.target.value)}
-											placeholder="Type a message..."
-											className="flex-1 bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500 transition-colors"
-											onKeyPress={(e) =>
-												e.key === "Enter" && handleSendMessage()
-											}
-										/>
-										<button
-											onClick={handleSendMessage}
-											className="p-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-										>
-											<Send className="w-4 h-4" />
-										</button>
-									</div>
+							{/* Media Gallery */}
+							<div>
+								<div className="mb-3">
+									<h3 className="font-semibold">Media</h3>
 								</div>
-							) : (
-								<div className="space-y-3 max-h-48 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800 scrollbar-thumb-rounded-full">
-									{historyItems.map((item) => (
-										<div key={item.id} className="flex items-center space-x-3">
-											<div
-												className={`p-2 rounded-full ${
-													item.type === "call"
-														? "bg-green-500/20 text-green-400"
-														: item.type === "message"
-														? "bg-blue-500/20 text-blue-400"
-														: item.type === "like"
-														? "bg-red-500/20 text-red-400"
-														: "bg-purple-500/20 text-purple-400"
-												}`}
-											>
-												{item.type === "call" && <Phone className="w-3 h-3" />}
-												{item.type === "message" && (
-													<MessageCircle className="w-3 h-3" />
-												)}
-												{item.type === "like" && <Heart className="w-3 h-3" />}
-												{item.type === "comment" && (
-													<MessageCircle className="w-3 h-3" />
-												)}
-											</div>
-											<div className="flex-1">
-												<p className="text-sm font-medium">{item.action}</p>
-												<div className="flex items-center space-x-2 text-xs text-slate-400">
-													<Clock className="w-3 h-3" />
-													<span>{item.time}</span>
-													{item.duration && <span>• {item.duration}</span>}
+
+								{/* Compressed Media Navigation - Single Line */}
+								<div className="flex gap-0.5 mb-3 bg-slate-700/30 rounded-lg p-1">
+									{[
+										{ key: "all" as MediaType, label: "All" },
+										{ key: "photos" as MediaType, label: "Photos" },
+										{ key: "videos" as MediaType, label: "Videos" },
+										{ key: "docs" as MediaType, label: "Docs" },
+										{ key: "audio" as MediaType, label: "Audio" },
+										{ key: "links" as MediaType, label: "Links" },
+									].map((tab) => (
+										<button
+											key={tab.key}
+											onClick={() => setMediaTab(tab.key)}
+											className={`flex-1 px-1.5 py-1 rounded text-xs transition-all duration-200 ${
+												mediaTab === tab.key
+													? "bg-blue-600 text-white"
+													: "text-slate-400 hover:text-white hover:bg-slate-600/50"
+											}`}
+										>
+											{tab.label}
+										</button>
+									))}
+								</div>
+
+								{/* Media Content */}
+								<div className="grid grid-cols-3 gap-2">
+									{mediaItems[mediaTab]?.map((item: MediaItem) => (
+										<div
+											key={item.id}
+											className="aspect-square rounded-lg overflow-hidden bg-slate-700/30 flex items-center justify-center"
+										>
+											{item.type === "photo" && (
+												<img
+													src={item.url}
+													alt={`Media ${item.id}`}
+													className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
+												/>
+											)}
+											{item.type === "video" && (
+												<div className="relative w-full h-full">
+													<img
+														src={item.url}
+														alt={`Video ${item.id}`}
+														className="w-full h-full object-cover"
+													/>
+													<PlayCircle className="absolute inset-0 m-auto w-6 h-6 text-white" />
 												</div>
-											</div>
+											)}
+											{item.type === "doc" && (
+												<div className="text-center p-2">
+													<FileIcon className="w-6 h-6 mx-auto mb-1 text-slate-400" />
+													<p className="text-xs text-slate-300 truncate">
+														{item.name}
+													</p>
+												</div>
+											)}
+											{item.type === "audio" && (
+												<div className="text-center p-2">
+													<Headphones className="w-6 h-6 mx-auto mb-1 text-slate-400" />
+													<p className="text-xs text-slate-300 truncate">
+														{item.name}
+													</p>
+												</div>
+											)}
+											{item.type === "link" && (
+												<div className="text-center p-2">
+													<Link className="w-6 h-6 mx-auto mb-1 text-slate-400" />
+													<p className="text-xs text-slate-300 truncate">
+														{item.name}
+													</p>
+													<p className="text-xs text-slate-400 truncate">
+														{item.url}
+													</p>
+												</div>
+											)}
 										</div>
 									))}
 								</div>
-							)}
-						</div>
-
-						{/* Media Gallery */}
-						<div>
-							<div className="mb-3">
-								<h3 className="font-semibold">Media</h3>
-							</div>
-
-							{/* Compressed Media Navigation - Single Line */}
-							<div className="flex gap-0.5 mb-3 bg-slate-700/30 rounded-lg p-1">
-								{[
-									{ key: "all" as MediaType, label: "All" },
-									{ key: "photos" as MediaType, label: "Photos" },
-									{ key: "videos" as MediaType, label: "Videos" },
-									{ key: "docs" as MediaType, label: "Docs" },
-									{ key: "audio" as MediaType, label: "Audio" },
-									{ key: "links" as MediaType, label: "Links" },
-								].map((tab) => (
-									<button
-										key={tab.key}
-										onClick={() => setMediaTab(tab.key)}
-										className={`flex-1 px-1.5 py-1 rounded text-xs transition-all duration-200 ${
-											mediaTab === tab.key
-												? "bg-blue-600 text-white"
-												: "text-slate-400 hover:text-white hover:bg-slate-600/50"
-										}`}
-									>
-										{tab.label}
-									</button>
-								))}
-							</div>
-
-							{/* Media Content */}
-							<div className="grid grid-cols-3 gap-2">
-								{mediaItems[mediaTab]?.map((item: MediaItem) => (
-									<div
-										key={item.id}
-										className="aspect-square rounded-lg overflow-hidden bg-slate-700/30 flex items-center justify-center"
-									>
-										{item.type === "photo" && (
-											<img
-												src={item.url}
-												alt={`Media ${item.id}`}
-												className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
-											/>
-										)}
-										{item.type === "video" && (
-											<div className="relative w-full h-full">
-												<img
-													src={item.url}
-													alt={`Video ${item.id}`}
-													className="w-full h-full object-cover"
-												/>
-												<PlayCircle className="absolute inset-0 m-auto w-6 h-6 text-white" />
-											</div>
-										)}
-										{item.type === "doc" && (
-											<div className="text-center p-2">
-												<FileIcon className="w-6 h-6 mx-auto mb-1 text-slate-400" />
-												<p className="text-xs text-slate-300 truncate">
-													{item.name}
-												</p>
-											</div>
-										)}
-										{item.type === "audio" && (
-											<div className="text-center p-2">
-												<Headphones className="w-6 h-6 mx-auto mb-1 text-slate-400" />
-												<p className="text-xs text-slate-300 truncate">
-													{item.name}
-												</p>
-											</div>
-										)}
-										{item.type === "link" && (
-											<div className="text-center p-2">
-												<Link className="w-6 h-6 mx-auto mb-1 text-slate-400" />
-												<p className="text-xs text-slate-300 truncate">
-													{item.name}
-												</p>
-												<p className="text-xs text-slate-400 truncate">
-													{item.url}
-												</p>
-											</div>
-										)}
-									</div>
-								))}
 							</div>
 						</div>
 					</div>
